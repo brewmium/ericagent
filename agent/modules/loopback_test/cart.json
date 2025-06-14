@@ -1,0 +1,7 @@
+{
+  "tool_id": "loopback_test",
+  "type": "local_tool",
+  "model_pref": [],
+  "entry_point": "tool.py",
+  "description": "Fallback local tool that echoes user input for loopback testing. Requires no model."
+}

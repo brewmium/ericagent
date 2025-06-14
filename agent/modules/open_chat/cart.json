@@ -1,0 +1,7 @@
+{
+  "tool_id": "open_chat",
+  "type": "prompt_tool",
+  "model_pref": ["llama3", "gpt-4o"],
+  "entry_point": "tool.py",
+  "description": "Open chat responder that echoes user input."
+}

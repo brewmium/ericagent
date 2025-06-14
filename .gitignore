@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pkl
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Environment variables and secrets
+.env
+
+# VS Code
+.vscode/
+
+# macOS system files
+.DS_Store
+
+# FastAPI/Uvicorn log or cache (if any arise later)
+*.log
+*.sqlite3
+
+# PyInstaller
+*.spec
+build/
+dist/
+*.egg-info/
+
+# Node or frontend-related (if any future JS toolchain is added)
+node_modules/
+

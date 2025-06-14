@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EricsAgent Console</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      display: flex;
+      height: 100vh;
+    }
+    #chat, #log {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    #chat {
+      border-right: 1px solid #ccc;
+    }
+    #messages, #logs {
+      flex: 1;
+      overflow-y: auto;
+      padding: 5px;
+      background: #f7f7f7;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+      white-space: pre-wrap;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+
+    /* This fixes your long-line issue */
+    pre {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      padding: 5px;
+      margin: 0;
+      border-radius: 5px;
+    }
+    pre strong {
+      color: #333;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="chat">
+    <div id="messages"></div>
+    <input id="chatInput" type="text" placeholder="Type a message..." />
+  </div>
+  <div id="log">
+    <div id="logs"></div>
+  </div>
+
+  <script>
+    const msgBox = document.getElementById("messages");
+    const logBox = document.getElementById("logs");
+    const input = document.getElementById("chatInput");
+
+    const chatSocket = new WebSocket("ws://localhost:8175/ws/chat");
+    const logSocket = new WebSocket("ws://localhost:8175/ws/logs");
+
+    chatSocket.onmessage = (event) => {
+      msgBox.innerHTML += `\n<pre><strong>Agent:</strong> ${event.data}</pre>`;
+      msgBox.scrollTop = msgBox.scrollHeight;
+    };
+
+    logSocket.onmessage = (event) => {
+      logBox.innerHTML += `\n<pre>${event.data}</pre>`;
+      logBox.scrollTop = logBox.scrollHeight;
+    };
+
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        const text = input.value.trim();
+        if (text) {
+          msgBox.innerHTML += `\n<pre><strong>You:</strong> ${text}</pre>`;
+          chatSocket.send(text);
+          input.value = "";
+        }
+      }
+    });
+  </script>
+</body>
+</html>
